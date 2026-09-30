@@ -6,22 +6,33 @@ hamburger.addEventListener("click", () => {
     navMenu.classList.toggle("active");
 })
 
-const items = [
-  { title: "Gaming laptop 1X", price: "€1499", img: "/img/laptop.webp", url: "/p/productPage?sneakers" },
-  { title: "Custom Gaming PC", price: "€1999", img: "/img/pc.png", url: "/p/productPage?backpack" },
-  { title: "Pro Gaming Headset", price: "€199", img: "/img/headset.webp",      url: "/p/productPage?cap" },
- 
-];
 
-const container = document.getElementById("products");
-const template = document.getElementById("product-template");
+/* Product read more modal */
 
-items.forEach((item) => {
-  const block = template.content.cloneNode(true);
-  block.querySelector(".product-img").src = item.img;
-  block.querySelector(".product-img").alt = item.title;
-  block.querySelector(".product-title").textContent = item.title;
-  block.querySelector(".product-price").textContent = item.price;
-  block.querySelector(".product-link").href = item.url;
-  container.appendChild(block);
+document.addEventListener("click", function(e) {
+  // Check if a modal trigger was clicked
+  if (e.target.matches("[data-modal-id]")) {
+    const modalId = e.target.getAttribute("data-modal-id");
+    const modal = document.getElementById(modalId);
+
+    if (modal) {
+      modal.style.display = "block";
+      console.log(`Opened modal: ${modalId}`);
+    }
+  }
+
+  // Close modal when clicking close button
+  if (e.target.matches(".close-btn")) {
+    const modal = e.target.closest(".modal");
+    if (modal) {
+      modal.style.display = "none";
+      console.log(`Closed modal: ${modal.id}`);
+    }
+  }
+
+  // Close modal when clicking outside content
+  if (e.target.classList.contains("modal")) {
+    e.target.style.display = "none";
+    console.log(`Closed modal by clicking outside: ${e.target.id}`);
+  }
 });
